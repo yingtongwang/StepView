@@ -1,6 +1,8 @@
 # StepView
 计数功能，仿照小米运动的动画。
- /**
+
+
+    /**
      * 画图
      *
      * @param canvas
@@ -94,7 +96,6 @@
         }
     }
 
-    #计数
     /**
      * Receives sensor updates and alerts a StepListener when a step has been detected.
      */
