@@ -160,9 +160,6 @@ public class StepView extends View {
         paint.setTextSize(100);
         String degree = String.valueOf(stepCount);
         canvas.drawText(stepCount, x_localion - getTextWidth(paint, degree) / 2, y_localion + 50, paint);
-//        paint.setTextSize(25);
-//        String degree1 = String.valueOf(step);
-//        canvas.drawText(step, x_localion - getTextWidth(paint, degree1) / 2, y_localion + 100, paint);
 
         /**
          * 画刻度
@@ -186,10 +183,19 @@ public class StepView extends View {
         MathDisc(canvas, x_localion, y_localion, paint, rate);
     }
 
+    /**
+     * 旋转画圆，rate...根据拆分的比例进行画圆
+     *
+     * @param canvas
+     * @param x
+     * @param y
+     * @param paint
+     * @param rate
+     */
     private void MathDisc(Canvas canvas, int x, int y, Paint paint, int rate) { //angle 角度
-        float hudu = (float) ((2 * Math.PI / 360) * (angle));   //  360/8=45,即45度(这个随个人设置)
-        float X = (float) (x + Math.sin(hudu) * mRadius);    //  r+5 是圆形中心的坐标X   即定位left 的值
-        float Y = (float) (y - Math.cos(hudu) * mRadius);    //  r+5 是圆形中心的坐标Y   即定位top 的值
+        float L = (float) ((2 * Math.PI / 360) * (angle));   //  360/8=45,即45度(这个随个人设置)
+        float X = (float) (x + Math.sin(L) * mRadius);    //  r+5 是圆形中心的坐标X   即定位left 的值
+        float Y = (float) (y - Math.cos(L) * mRadius);    //  r+5 是圆形中心的坐标Y   即定位top 的值
         canvas.drawCircle(X, Y, 5, paint);
         canvas.restore();
     }
@@ -209,11 +215,6 @@ public class StepView extends View {
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    /**
-                     * 这里我们已经知道ValueAnimator只是对值做动画运算，而不是针对控件的，因为我们设置的区间值为0-1.0f
-                     * 所以animation.getAnimatedValue()得到的值也是在[0.0-1.0]区间，而我们在画进度条弧度时，设置的当前角度为360*currentAngle，
-                     * 因此，当我们的区间值变为1.0的时候弧度刚好转了360度
-                     */
                     angle = 360 * (float) animation.getAnimatedValue();
                     invalidate();//实时刷新view，这样我们的进度条弧度就动起来了
                 }
